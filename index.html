@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>uma coisa meio idiota (no bom sentido) 💛</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Fonte especial: Cormorant (elegante/romântica) + DM Sans (corpo limpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ✦ Partículas de fundo (corações flutuantes gerados via JS) -->
+  <div id="particles-bg" aria-hidden="true"></div>
+
+  <!-- ✦ Botão de música -->
+  <button id="music-btn" class="music-btn" title="Ligar/desligar música" aria-label="Controle de música">
+    <span id="music-icon">🎵</span>
+  </button>
+
+  <!-- ✦ Áudio de fundo -->
+  <audio id="bg-music" loop>
+    <source src="music.m4a" type="audio/mp4" />
+  </audio>
+
+  <!-- ✦ Efeito sonoro de clique (base64 tone curto) -->
+  <audio id="sfx-click" preload="auto"></audio>
+
+  <!-- ===== CONTAINER PRINCIPAL DO JOGO ===== -->
+  <main id="game" class="game-container">
+
+    <!-- ──────────────────────────────────────
+         TELA 1 – BOAS-VINDAS
+    ────────────────────────────────────── -->
+    <section class="screen active" id="screen-1" data-screen="1">
+      <div class="card">
+        <div class="deco-line"></div>
+        <p class="eyebrow">ei…</p>
+        <h1 class="title">antes de tudo<br/>eu preciso te falar uma coisa</h1>
+        <p class="body-text">
+          isso aqui pode ser um pouco bobo…<br/>
+          mas é muito sincero
+        </p>
+        <p class="body-text soft">então vem comigo até o final? 💛</p>
+        <div class="deco-line"></div>
+        <button class="btn-main" onclick="nextScreen()">tô curiosa agora 👀</button>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────
+         TELA 2 – O COMEÇO
+    ────────────────────────────────────── -->
+    <section class="screen" id="screen-2" data-screen="2">
+      <div class="card">
+        <p class="eyebrow">o começo</p>
+        <h2 class="title italic">desde o primeiro momento…</h2>
+        <p class="body-text">
+          Eu ainda acho meio doido pensar que<br/>
+          desde o primeiro momento…
+        </p>
+        <p class="body-text highlight">
+          você me deixou completamente à vontade
+        </p>
+        <p class="body-text soft">
+          tipo… sem vergonha, sem esforço<br/>
+          só sendo eu
+        </p>
+        <button class="btn-main" onclick="nextScreen()">continua…</button>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────
+         TELA 3 – CONEXÃO
+    ────────────────────────────────────── -->
+    <section class="screen" id="screen-3" data-screen="3">
+      <div class="card">
+        <p class="eyebrow">conexão</p>
+        <h2 class="title">parecia que eu já te conhecia<br/>há muito tempo</h2>
+        <p class="body-text">
+          E quanto mais a gente foi se conhecendo…<br/>
+          mais parecia que isso não era "do nada"
+        </p>
+        <p class="body-text soft">e isso não é uma sensação comum</p>
+        <div class="btn-group">
+          <button class="btn-choice" onclick="nextScreen()">também senti isso</button>
+          <button class="btn-choice" onclick="nextScreen()">confesso que sim…</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────
+         TELA 4 – MOMENTOS (mini-game de corações)
+    ────────────────────────────────────── -->
+    <section class="screen" id="screen-4" data-screen="4">
+      <div class="card">
+        <p class="eyebrow">os momentos</p>
+        <h2 class="title">eu fico pensando<br/>nos nossos momentos…</h2>
+        <p class="body-text">
+          nas conversas · nas risadas<br/>
+          nos carinhos · em dormir juntas
+        </p>
+        <p class="body-text soft">e em como tudo isso é leve com você</p>
+
+        <!-- Mini-game: clicar nos corações -->
+        <div id="heart-game" class="heart-game">
+          <p class="heart-instruction">clica nos corações 🫶</p>
+          <div id="hearts-container" class="hearts-container"></div>
+          <div class="heart-progress">
+            <span id="heart-count">0</span> / <span id="heart-total">7</span>
+          </div>
+        </div>
+
+        <!-- Mensagem após completar o mini-game (oculta inicialmente) -->
+        <div id="after-hearts" class="after-hearts hidden">
+          <p class="body-text italic highlight">
+            não é só sobre ficar…<br/>
+            é sobre como eu me sinto quando tô com você
+          </p>
+          <button class="btn-main" onclick="nextScreen()">💛</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────
+         TELA 5 – VIDA REAL
+    ────────────────────────────────────── -->
+    <section class="screen" id="screen-5" data-screen="5">
+      <div class="card">
+        <p class="eyebrow">vida real</p>
+        <h2 class="title">a gente sabe que a vida<br/>não é tão simples assim</h2>
+        <p class="body-text">
+          tem planos<br/>
+          tem incertezas<br/>
+          tem caminhos que podem mudar
+        </p>
+        <p class="body-text soft italic">
+          (tipo você possivelmente indo embora<br/>depois do mestrado…)
+        </p>
+        <button class="btn-main" onclick="nextScreen()">eu pensei nisso também</button>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────
+         TELA 6 – ESCOLHA
+    ────────────────────────────────────── -->
+    <section class="screen" id="screen-6" data-screen="6">
+      <div class="card">
+        <p class="eyebrow">a escolha</p>
+        <h2 class="title">a gente escolheu continuar</h2>
+        <p class="body-text">
+          mas mesmo com tudo isso…
+        </p>
+        <p class="body-text highlight">
+          a gente escolheu continuar<br/>
+          continuar se vendo<br/>
+          continuar sentindo
+        </p>
+        <p class="body-text soft">e isso diz muito, sabia?</p>
+        <button class="btn-main" onclick="nextScreen()">diz mesmo…</button>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────
+         TELA 7 – SENTIMENTO
+    ────────────────────────────────────── -->
+    <section class="screen" id="screen-7" data-screen="7">
+      <div class="card">
+        <p class="eyebrow">sentimento</p>
+        <h2 class="title italic">eu não tô sendo<br/>"emocionada sozinha"</h2>
+        <p class="body-text">
+          porque eu sinto…<br/>
+          e eu sei que você também sente
+        </p>
+        <p class="body-text highlight">
+          e o que a gente tem…<br/>
+          é bonito demais pra fingir<br/>que é só qualquer coisa
+        </p>
+        <button class="btn-main" onclick="nextScreen()">ok… agora fiquei séria</button>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────
+         TELA 8 – TRANSIÇÃO FINAL
+    ────────────────────────────────────── -->
+    <section class="screen" id="screen-8" data-screen="8">
+      <div class="card">
+        <p class="eyebrow">então…</p>
+        <h2 class="title">sem pressão<br/>sem pressa</h2>
+        <p class="body-text">
+          e sendo bem a gente
+        </p>
+        <p class="body-text soft">eu só queria te perguntar uma coisa:</p>
+        <button class="btn-main pulse" onclick="nextScreen()">o quê?</button>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────
+         TELA FINAL – O PEDIDO
+    ────────────────────────────────────── -->
+    <section class="screen" id="screen-final" data-screen="final">
+      <div class="card card-final">
+        <!-- Corações de fundo animados -->
+        <div id="final-hearts" class="final-hearts" aria-hidden="true"></div>
+
+        <p class="eyebrow">a pergunta 💛</p>
+        <h2 class="title title-final">
+          você quer continuar<br/>construindo isso comigo…
+        </h2>
+        <p class="body-text highlight big">e namorar comigo? 💛</p>
+
+        <div class="final-buttons">
+          <button class="btn-yes" onclick="celebrate('sim')">sim ❤️</button>
+          <button class="btn-yes" onclick="celebrate('certeza')">com certeza ❤️</button>
+        </div>
+
+        <p class="ps-note">ps: eu realmente gostei demais de você desde o primeiro dia 🫣</p>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────
+         TELA DE CELEBRAÇÃO (resposta sim)
+    ────────────────────────────────────── -->
+    <section class="screen" id="screen-celebrate" data-screen="celebrate">
+      <div class="card card-celebrate">
+        <div id="celebrate-hearts" class="celebrate-hearts" aria-hidden="true"></div>
+        <h2 class="title celebrate-title">🎉</h2>
+        <h2 class="title" id="celebrate-msg">sim ❤️</h2>
+        <p class="body-text highlight">
+          eu realmente gostei demais de você<br/>desde o primeiro dia 🫣
+        </p>
+        <p class="body-text soft">e agora fico ainda mais feliz 💛</p>
+        <div class="confetti-container" id="confetti-container" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- Botão "não" dançando pela tela toda -->
+  <button class="btn-no" id="btn-no" ontouchstart="runAway(this)" onmouseenter="runAway(this)">não</button>
+
+</main><!-- /game -->
+
+  <script src="script.js"></script>
+</body>
+</html>
